@@ -20,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/lushiyi61/dvaweb/issues"
   },
-  "homepage": "https://github.com/lushiyi61/dvaweb#readme"
+  "homepage": "https://github.com/lushiyi61/dvaweb#readme",
+  "dependencies": {
+    "@rematch/core": "^2.2.0",
+    "@rematch/loading": "^2.1.2",
+    "axios": "^1.2.6",
+    "react-redux": "^8.0.5"
+  }
 }
