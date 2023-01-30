@@ -4,7 +4,7 @@
 @Author  :   路拾遗
 @Version :   1.0
 @Contact :   lk920125@hotmail.com
-yarn add axios @rematch/loading @rematch/core  react-redux
+yarn add axios @rematch/loading @rematch/core  react-redux redux
 ***************************************/
 
 import { useSelector } from "react-redux";
