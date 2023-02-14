@@ -78,20 +78,24 @@ export const initModels = (printLog = false, token = "Token") => {
     });
     return dvaParams.storeInstance;
 };
+
 export const useLoading = (namespace: string) => {
     return useSelector((store: any) => {
         return store.loading.models[namespace];
     });
 };
+
 export const useConnect = (namespace: string) => {
     return useSelector((store: any) => {
         return store[namespace];
     });
 };
+
 export const reducer = (namespace: string, type: string, payload: any) => {
     dvaParams.printLog && console.log("[reducer]", namespace, type, payload);
     return dvaParams.storeInstance.dispatch[namespace][type](payload);
 };
+
 export const effect = async (namespace: string, type: string, payload?: any) => {
     dvaParams.printLog && console.log("[effect]", namespace, type, payload);
     return await dvaParams.storeInstance.dispatch[namespace][type](payload);
@@ -105,6 +109,7 @@ const requestParams: any = {
     extraHeaders: {},
     serverHomeIndex: 0,
 };
+
 export function initRequest(
     serverHome: string[],
     errorHanlder: Function,
@@ -116,9 +121,11 @@ export function initRequest(
     requestParams.errorHanlder = errorHanlder;
     requestParams.serverHomeIndex = serverHomeIndex;
 }
+
 export function bindHeader(key: string, value: string) {
     requestParams.extraHeaders[key] = value;
 }
+
 export function bindJWTToken(token?: string) {
     if (token) {
         localStorage.setItem(dvaParams.token, token);
@@ -128,18 +135,23 @@ export function bindJWTToken(token?: string) {
         delete requestParams.extraHeaders["Authorization"];
     }
 }
+
 export function requestGet(url: string, body?: any,): any {
     return request(url, { method: "GET", body }, null);
 }
+
 export function requestDelete(url: string) {
     return request(url, { method: "DELETE" }, null);
 }
+
 export function requestPost(url: string, body?: any,): any {
     return request(url, { method: "POST", body }, null);
 }
+
 export function requestPatch(url: string, body?: any,) {
     return request(url, { method: "PATCH", body }, null);
 }
+
 export function requestPut(url: string, body?: any,) {
     body && delete body.id;
     return request(url, { method: "PUT", body }, null);
