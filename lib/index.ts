@@ -17,9 +17,12 @@ import axios, { AxiosRequestConfig } from "axios";
 export enum EFunctionKey {
     RSetState = "RSetState",
     EGet = "EGet",
+    EGetOne = "EGetOne",
     EPost = "EPost",
+    EPostBatch = "EPostBatch",
     EDelete = "EDelete",
     EPut = "EPut",
+    EPutBatch = "EPutBatch",
 }
 // dva参数
 const dvaParams: { storeInstance: any, printLog: boolean, token: string } = { storeInstance: null, printLog: false, token: "Token" };
