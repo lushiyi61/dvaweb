@@ -166,7 +166,9 @@ export function requestFile(url: string, body: any = {}, method: 'GET' | 'POST' 
     return new Promise((resolve, reject) => {
         // 添加url前缀
         if (url.indexOf('https://') === -1 && url.indexOf('http://') === -1) {
-            url = requestParams.serverHome + (url.indexOf('/') === 0 ? url.substr(1) : url);
+            url =
+                requestParams.serverHome[requestParams.serverHomeIndex] +
+                (url.indexOf("/") === 0 ? url.substr(1) : url);
         }
 
         const option: AxiosRequestConfig = {
