@@ -2,7 +2,7 @@
 @File    :   index.ts
 @Time    :   2023/01/30 10:15:39
 @Author  :   路拾遗
-@Version :   1.0
+@Version :   1.0.2
 @Contact :   lk920125@hotmail.com
 yarn add axios @rematch/loading @rematch/core  react-redux redux
 ***************************************/
