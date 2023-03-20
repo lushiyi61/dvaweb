@@ -233,7 +233,7 @@ function request(
     url: string,
     options: any,
     ContentType: any = null
-) {
+): Promise<any> {
     return new Promise((resolve, reject) => {
         const { method, body } = options;
 
