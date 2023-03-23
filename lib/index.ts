@@ -24,6 +24,11 @@ export enum EFunctionKey {
     EPut = "EPut",
     EPutBatch = "EPutBatch",
 }
+export const reducers = {
+    [EFunctionKey.RSetState](payload: any, state: any) {
+        return { ...payload, ...state }
+    }
+}
 // dva参数
 const dvaParams: { storeInstance: any, printLog: boolean, token: string } = { storeInstance: null, printLog: false, token: "Token" };
 // 所有的model
