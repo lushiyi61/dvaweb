@@ -1,6 +1,6 @@
 {
   "name": "dvaweb",
-  "version": "1.0.4",
+  "version": "2.0.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -26,6 +26,8 @@
     "@rematch/core": "^2.2.0",
     "@rematch/loading": "^2.1.2",
     "axios": "^1.2.6",
+    "cos-js-sdk-v5": "^1.4.16",
+    "moment": "^2.29.4",
     "react-redux": "^8.0.5",
     "redux": "^4.2.1"
   },
