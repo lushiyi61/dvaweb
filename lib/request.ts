@@ -35,16 +35,6 @@ export function bindHeader(key: string, value: string) {
     requestParams.extraHeaders[key] = value;
 }
 
-export function bindJWTToken(token?: string) {
-    if (token) {
-        localStorage.setItem(requestParams.token, token);
-        requestParams.extraHeaders["Authorization"] = token;
-    } else {
-        localStorage.removeItem(requestParams.token);
-        delete requestParams.extraHeaders["Authorization"];
-    }
-}
-
 export function getUrl(url?: string, index: number = -1): string {
     if (!url) {
         return requestParams.serverHome[requestParams.serverHomeIndex]
@@ -127,6 +117,16 @@ export function requestFile(
             reject(e)
         })
     })
+}
+
+export function bindJWTToken(token?: string) {
+    if (token) {
+        localStorage.setItem(requestParams.token, token);
+        requestParams.extraHeaders["Authorization"] = token;
+    } else {
+        localStorage.removeItem(requestParams.token);
+        delete requestParams.extraHeaders["Authorization"];
+    }
 }
 
 function request(
