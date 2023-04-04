@@ -3,7 +3,6 @@
  */
 
 import * as COS from 'cos-js-sdk-v5';
-import * as moment from 'moment';
 import { EFunctionKey, bindingModel, reducers } from './dva';
 import { requestGet } from './request';
 
@@ -78,7 +77,7 @@ bindingModel({
         async [NFile.EUploadBody]({ payload }: { payload: { file: File, onProgress: Function } }, { effect }: any) {
             const { Bucket, Region, allowPrefix, urlBefore, urlAfter, cos } = await effect(NFile.EGet, {})
             const { file, onProgress } = payload
-            const uid = moment().valueOf() + Math.random().toString().substring(3, 6)
+            const uid = Date.now() + Math.random().toString().substring(3, 6)
             const filename = allowPrefix + uid + file.name.substring(file.name.lastIndexOf('.'))
             try {
                 return await new Promise((resolve, reject) => {
@@ -109,7 +108,7 @@ bindingModel({
         async [NFile.EUploadFile]({ payload }: { payload: { filePath: string, onProgress: Function } }, { effect }: any) {
             const { Bucket, Region, allowPrefix, urlBefore, urlAfter, cos } = await effect(NFile.EGet, {})
             const { filePath, onProgress } = payload
-            const uid = moment().valueOf() + Math.random().toString().substring(3, 6)
+            const uid = Date.now() + Math.random().toString().substring(3, 6)
             const filename = allowPrefix + uid + filePath.substring(filePath.lastIndexOf('.'))
             try {
                 return await new Promise((resolve, reject) => {
