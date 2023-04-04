@@ -2,8 +2,8 @@
  * yarn add cos-js-sdk-v5 moment
  */
 
-import COS from 'cos-js-sdk-v5'
-import moment from "moment";
+import * as COS from 'cos-js-sdk-v5';
+import * as moment from 'moment';
 import { EFunctionKey, bindingModel, reducers } from './dva';
 import { requestGet } from './request';
 
