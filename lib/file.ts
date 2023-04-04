@@ -50,19 +50,25 @@ bindingModel({
                     credentials: { sessionToken: XCosSecurityToken, tmpSecretId: TmpSecretId, tmpSecretKey: TmpSecretKey },
                 },
             } = response
-            const cos = new COS({
-                getAuthorization: ($: any, callback: any) => {
-                    callback({
-                        TmpSecretId,
-                        TmpSecretKey,
-                        XCosSecurityToken,
-                        ExpiredTime,
-                        StartTime,
-                    })
-                }
-            })
-            reducer(NFile.RSetState, { Bucket, Region, allowPrefix, urlBefore, urlAfter, cos, expiredTime: ExpiredTime })
-            return { Bucket, Region, allowPrefix, urlBefore, urlAfter, cos, expiredTime: ExpiredTime }
+
+            try {
+                const cos = new COS({
+                    getAuthorization: ($: any, callback: any) => {
+                        callback({
+                            TmpSecretId,
+                            TmpSecretKey,
+                            XCosSecurityToken,
+                            ExpiredTime,
+                            StartTime,
+                        })
+                    }
+                })
+                reducer(NFile.RSetState, { Bucket, Region, allowPrefix, urlBefore, urlAfter, cos, expiredTime: ExpiredTime })
+                return { Bucket, Region, allowPrefix, urlBefore, urlAfter, cos, expiredTime: ExpiredTime }
+            } catch (error) {
+                console.log('error:', error);
+                throw error
+            }
         },
 
         /**
