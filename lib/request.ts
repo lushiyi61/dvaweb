@@ -1,14 +1,16 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 /*------------------------- 基于axios实现的通用request，json格式，jwt校验 -------------------------*/
-const requestParams: {
+interface IParams {
     serverHome: string[],
     errorHandler: Function,
     printLog: boolean,
     extraHeaders: any,
     serverHomeIndex: number,
     token: string,
-} = {
+}
+
+const requestParams: IParams = {
     serverHome: [],
     errorHandler: () => { },
     printLog: false,
