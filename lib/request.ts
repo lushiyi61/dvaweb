@@ -49,24 +49,24 @@ export function getUrl(url?: string, index: number = -1): string {
 }
 
 export function requestGet(url: string, body?: any, serverHomeIndex?: number) {
-    return request(getUrl(url, serverHomeIndex), { method: "GET", body },);
+    return request(getUrl(url, serverHomeIndex), { method: "GET", body }, requestParams);
 }
 
 export function requestDelete(url: string, serverHomeIndex?: number) {
-    return request(getUrl(url, serverHomeIndex), { method: "DELETE" },);
+    return request(getUrl(url, serverHomeIndex), { method: "DELETE" }, requestParams);
 }
 
 export function requestPost(url: string, body?: any, serverHomeIndex?: number) {
-    return request(getUrl(url, serverHomeIndex), { method: "POST", body },);
+    return request(getUrl(url, serverHomeIndex), { method: "POST", body }, requestParams);
 }
 
 export function requestPatch(url: string, body?: any, serverHomeIndex?: number) {
-    return request(getUrl(url, serverHomeIndex), { method: "PATCH", body },);
+    return request(getUrl(url, serverHomeIndex), { method: "PATCH", body }, requestParams);
 }
 
 export function requestPut(url: string, body?: any, serverHomeIndex?: number) {
     body && delete body.id;
-    return request(getUrl(url, serverHomeIndex), { method: "PUT", body },);
+    return request(getUrl(url, serverHomeIndex), { method: "PUT", body }, requestParams);
 }
 
 export function requestFile(
@@ -121,7 +121,7 @@ export function requestFile(
     })
 }
 
-export function bindJWTToken(token?: string) {
+export let bindJWTToken = (token?: string) => {
     if (token) {
         localStorage.setItem(requestParams.token, token);
         requestParams.extraHeaders["Authorization"] = token;
@@ -131,43 +131,43 @@ export function bindJWTToken(token?: string) {
     }
 }
 
-function request(
+let request = (
     url: string,
     options: any,
+    requestParams: IParams,
+): Promise<any> => {
+    const { method, body } = options;
 
-): Promise<any> {
-    return new Promise((resolve, reject) => {
-        const { method, body } = options;
+    if (!requestParams.extraHeaders["Authorization"]) {
+        const token = localStorage.getItem(requestParams.token);
+        token && (requestParams.extraHeaders["Authorization"] = token);
+    }
+    const option: AxiosRequestConfig = {
+        method,
+        url,
+        headers: {
+            Accept: "application/json",
+            Pragma: "no-cache",
+            Expires: 0,
+            "Cache-Control": "no-cache",
+            "Content-Type": "application/json; charset=utf-8",
+            ...requestParams.extraHeaders,
+        },
+    };
+    // 参数赋值
+    switch (method.toUpperCase()) {
+        case "GET":
+        case "DELETE":
+            option.params = body || {};
+            break;
+        case "POST":
+        case "PATCH":
+        case "PUT":
+            option.data = body || {};
+            break;
+    }
 
-        if (!requestParams.extraHeaders["Authorization"]) {
-            const token = localStorage.getItem(requestParams.token);
-            token && (requestParams.extraHeaders["Authorization"] = token);
-        }
-        const option: AxiosRequestConfig = {
-            method,
-            url,
-            headers: {
-                Accept: "application/json",
-                Pragma: "no-cache",
-                Expires: 0,
-                "Cache-Control": "no-cache",
-                "Content-Type": "application/json; charset=utf-8",
-                ...requestParams.extraHeaders,
-            },
-        };
-        // 参数赋值
-        switch (method.toUpperCase()) {
-            case "GET":
-            case "DELETE":
-                option.params = body || {};
-                break;
-            case "POST":
-            case "PATCH":
-            case "PUT":
-                option.data = body || {};
-                break;
-        }
-
+    return new Promise((resolve) => {
         axios(option)
             .then(({ data }) => {
                 requestParams.printLog &&
@@ -185,4 +185,15 @@ function request(
                 resolve(null);
             });
     });
+}
+
+export function updateBindJWTToken(f: (token?: string) => void) {
+    bindJWTToken = f
+}
+
+export function updateRequest(f: (
+    url: string,
+    options: any,
+    requestParams: IParams,) => Promise<any>) {
+    request = f
 }
