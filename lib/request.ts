@@ -143,7 +143,7 @@ function request(
             const token = localStorage.getItem(requestParams.token);
             token && (requestParams.extraHeaders["Authorization"] = token);
         }
-        const option: any = {
+        const option: AxiosRequestConfig = {
             method,
             url,
             headers: {
