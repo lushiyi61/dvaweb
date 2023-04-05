@@ -49,24 +49,24 @@ export function getUrl(url?: string, index: number = -1): string {
 }
 
 export function requestGet(url: string, body?: any, serverHomeIndex?: number) {
-    return request(getUrl(url, serverHomeIndex), { method: "GET", body }, null);
+    return request(getUrl(url, serverHomeIndex), { method: "GET", body },);
 }
 
 export function requestDelete(url: string, serverHomeIndex?: number) {
-    return request(getUrl(url, serverHomeIndex), { method: "DELETE" }, null);
+    return request(getUrl(url, serverHomeIndex), { method: "DELETE" },);
 }
 
 export function requestPost(url: string, body?: any, serverHomeIndex?: number) {
-    return request(getUrl(url, serverHomeIndex), { method: "POST", body }, null);
+    return request(getUrl(url, serverHomeIndex), { method: "POST", body },);
 }
 
 export function requestPatch(url: string, body?: any, serverHomeIndex?: number) {
-    return request(getUrl(url, serverHomeIndex), { method: "PATCH", body }, null);
+    return request(getUrl(url, serverHomeIndex), { method: "PATCH", body },);
 }
 
 export function requestPut(url: string, body?: any, serverHomeIndex?: number) {
     body && delete body.id;
-    return request(getUrl(url, serverHomeIndex), { method: "PUT", body }, null);
+    return request(getUrl(url, serverHomeIndex), { method: "PUT", body },);
 }
 
 export function requestFile(
@@ -134,7 +134,7 @@ export function bindJWTToken(token?: string) {
 function request(
     url: string,
     options: any,
-    ContentType: any = null
+
 ): Promise<any> {
     return new Promise((resolve, reject) => {
         const { method, body } = options;
@@ -149,9 +149,9 @@ function request(
             headers: {
                 Accept: "application/json",
                 Pragma: "no-cache",
-                "Cache-Control": "no-cache",
                 Expires: 0,
-                "Content-Type": ContentType || "application/json; charset=utf-8",
+                "Cache-Control": "no-cache",
+                "Content-Type": "application/json; charset=utf-8",
                 ...requestParams.extraHeaders,
             },
         };
