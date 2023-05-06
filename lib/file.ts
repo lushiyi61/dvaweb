@@ -79,31 +79,27 @@ bindingModel({
             const { file, onProgress } = payload
             const uid = Date.now() + Math.random().toString().substring(3, 6)
             const filename = allowPrefix + uid + file.name.substring(file.name.lastIndexOf('.'))
-            try {
-                return await new Promise((resolve, reject) => {
-                    cos?.sliceUploadFile(
-                        {
-                            Bucket,
-                            Region,
-                            Key: filename,
-                            Body: file,
-                            onProgress,
-                        },
-                        function (err: any, data: { Location: any; }) {
-                            if (err) {
-                                reject(null)
-                            } else {
-                                const { Location } = data
-                                const url = Location.replace(urlBefore, urlAfter)
-                                resolve({ url, name: file.name, size: file.size })
-                            }
+            return await new Promise((resolve, reject) => {
+                cos?.sliceUploadFile(
+                    {
+                        Bucket,
+                        Region,
+                        Key: filename,
+                        Body: file,
+                        onProgress,
+                    },
+                    function (err: any, data: { Location: any; }) {
+                        if (err) {
+                            console.log('err:', err);
+                            resolve(null)
+                        } else {
+                            const { Location } = data
+                            const url = Location.replace(urlBefore, urlAfter)
+                            resolve({ url, name: file.name, size: file.size })
                         }
-                    )
-                })
-            } catch (err) {
-                console.log('err: ', err)
-                return null
-            }
+                    }
+                )
+            })
         },
         async [NFile.EUploadFile]({ payload }: { payload: { filePath: string, onProgress: Function } }, { effect }: any) {
             const { Bucket, Region, allowPrefix, urlBefore, urlAfter, cos } = await effect(NFile.EGet, {})
