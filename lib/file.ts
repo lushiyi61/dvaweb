@@ -1,5 +1,5 @@
 /**
- * yarn add cos-js-sdk-v5 moment
+ * yarn add cos-js-sdk-v5
  */
 
 import * as COS from 'cos-js-sdk-v5';

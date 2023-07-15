@@ -5,6 +5,8 @@
 @Version :   2.1.0
 @Contact :   lk920125@hotmail.com
 yarn add axios @rematch/loading @rematch/core  react-redux redux
+yarn add @types/node 
+yarn add -D typescript
 ***************************************/
 
 
