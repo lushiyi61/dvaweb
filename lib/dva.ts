@@ -78,9 +78,9 @@ export const initModels = (printLog = false, token = "Token") => {
     return dvaParams.storeInstance;
 };
 
-export const useLoading = (namespace: string) => {
+export const useLoading = (namespace: string, effects?: string) => {
     return useSelector((store: any) => {
-        return store.loading.models[namespace];
+        return effects ? store.loading.models[namespace][effects] : store.loading.models[namespace];
     });
 };
 
