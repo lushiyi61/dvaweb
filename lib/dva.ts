@@ -80,7 +80,7 @@ export const initModels = (printLog = false, token = "Token") => {
 
 export const useLoading = (namespace: string, effects?: string) => {
     return useSelector((store: any) => {
-        return effects ? store.loading.models[namespace][effects] : store.loading.models[namespace];
+        return effects ? store.loading.effects[namespace][effects] : store.loading.models[namespace];
     });
 };
 
