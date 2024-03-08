@@ -21,7 +21,7 @@ export const reducers = {
     }
 }
 // dva参数
-const dvaParams: { storeInstance: any, printLog: boolean, token: string } = { storeInstance: null, printLog: false, token: "Token" };
+const dvaParams: { storeInstance: any, printLog: boolean } = { storeInstance: null, printLog: false };
 // 所有的model
 const modelArray: any[] = [];
 
@@ -29,11 +29,10 @@ export function bindingModel(model: any) {
     modelArray.push(model);
 }
 
-export const initModels = (printLog = false, token = "Token") => {
+export const initModels = (printLog = false) => {
     if (dvaParams.storeInstance) return dvaParams.storeInstance
     console.log("modelArray size ==>", modelArray.length)
     dvaParams.printLog = printLog;
-    dvaParams.token = token;
     const models: any = {};
     for (let model of modelArray) {
         models[model.namespace] = createModel()({
