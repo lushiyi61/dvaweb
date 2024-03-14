@@ -69,41 +69,9 @@ export function requestPut(url: string, body?: any, serverHomeIndex?: number) {
     return request(getUrl(url, serverHomeIndex), { method: "PUT", body }, requestParams);
 }
 
-export function uploadFile(
-    url: string,
-    body: any = {},
-    serverHomeIndex?: number,): Promise<any> {
-    if (!requestParams.extraHeaders["Authorization"]) {
-        const token = localStorage.getItem(requestParams.token);
-        token && (requestParams.extraHeaders["Authorization"] = token);
-    }
-    url = getUrl(url, serverHomeIndex)
-    const option: AxiosRequestConfig = {
-        method: 'post',
-        url,
-        headers: {
-            ...requestParams.extraHeaders,
-            Accept: "application/json",
-            Pragma: "no-cache",
-            Expires: 0,
-            "Cache-Control": "no-cache",
-            'Content-Type': 'multipart/form-data',
-        },
-        params: body,
-        data: body,
-    };
-
-    return new Promise((resolve, reject) => {
-        axios(option).then(response => {
-            // console.log('response:', response);
-            resolve(response.data)
-        }).catch(e => {
-            console.error('[catch]', JSON.stringify(e));
-            const { status, data } = e?.response || {};
-            status && data && requestParams.errorHandler(status, data);
-            reject(e)
-        })
-    })
+export function uploadFile(url: string, body: any = {}, serverHomeIndex?: number,): Promise<any> {
+    requestParams.extraHeaders['Content-Type'] = 'application/form-data'
+    return request(getUrl(url, serverHomeIndex), { method: "POST", body }, requestParams);
 }
 
 export function requestFile(
