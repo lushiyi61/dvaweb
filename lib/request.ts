@@ -70,8 +70,7 @@ export function requestPut(url: string, body?: any, serverHomeIndex?: number) {
 }
 
 export function uploadFile(url: string, body: any = {}, serverHomeIndex?: number,): Promise<any> {
-    requestParams.extraHeaders['Content-Type'] = 'application/form-data'
-    return request(getUrl(url, serverHomeIndex), { method: "POST", body }, requestParams);
+    return request(getUrl(url, serverHomeIndex), { method: "POST", body }, requestParams, { 'Content-Type': 'application/form-data' });
 }
 
 export function requestFile(
@@ -140,6 +139,7 @@ let request = (
     url: string,
     options: any,
     requestParams: IParams,
+    extraHeaders?: {},
 ): Promise<any> => {
     const { method, body } = options;
 
@@ -157,6 +157,7 @@ let request = (
             "Cache-Control": "no-cache",
             "Content-Type": "application/json; charset=utf-8",
             ...requestParams.extraHeaders,
+            ...extraHeaders,
         },
     };
     // 参数赋值
