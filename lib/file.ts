@@ -74,9 +74,9 @@ bindingModel({
          * 上传文件对象（单个文件上传）
          * @returns 
          */
-        async [NFile.EUploadBody]({ payload }: { payload: { file: File, onProgress: Function } }, { effect }: any) {
+        async [NFile.EUploadBody]({ payload }: any, { effect }: any) {
+            const { file, onProgress, onSuccess, onError } = payload;
             const { Bucket, Region, allowPrefix, urlBefore, urlAfter, cos } = await effect(NFile.EGet, {})
-            const { file, onProgress } = payload
             const uid = Date.now() + Math.random().toString().substring(3, 6)
             const filename = allowPrefix + uid + file.name.substring(file.name.lastIndexOf('.'))
             return await new Promise((resolve, reject) => {
@@ -90,11 +90,13 @@ bindingModel({
                     },
                     function (err: any, data: { Location: any; }) {
                         if (err) {
+                            onError(err)
                             console.log('err:', err);
                             resolve(null)
                         } else {
                             const { Location } = data
                             const url = Location.replace(urlBefore, urlAfter)
+                            onSuccess({ url, name: file.name, size: file.size })
                             resolve({ url, name: file.name, size: file.size })
                         }
                     }
