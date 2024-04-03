@@ -1,6 +1,6 @@
 {
   "name": "dvaweb",
-  "version": "4.0.1",
+  "version": "4.0.3",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -23,15 +23,19 @@
   },
   "homepage": "https://github.com/lushiyi61/dvaweb#readme",
   "dependencies": {
+    "@microsoft/fetch-event-source": "^2.0.1",
     "@rematch/core": "^2.2.0",
     "@rematch/loading": "^2.1.2",
     "@types/node": "^20.4.2",
     "axios": "^1.6.7",
     "cos-js-sdk-v5": "^1.7.0",
+    "qs": "^6.12.0",
     "react-redux": "^9.1.0",
     "redux": "^5.0.1",
     "typescript": "^5.4.2",
     "user": "^0.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/qs": "^6.9.14"
+  }
 }

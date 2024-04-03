@@ -1,4 +1,6 @@
+import { EventSourceMessage, fetchEventSource } from "@microsoft/fetch-event-source";
 import axios, { AxiosRequestConfig } from "axios";
+import * as qs from 'qs';
 
 /*------------------------- 基于axios实现的通用request，json格式，jwt校验 -------------------------*/
 interface IParams {
@@ -46,6 +48,40 @@ export function getUrl(url?: string, index: number = -1): string {
         return requestParams.serverHome[index >= 0 ? index : requestParams.serverHomeIndex] + url;
     }
     return url
+}
+
+export function requestSse(url: string, cb: {
+    onopen?: (response: Response) => Promise<void>;
+    onmessage?: (ev: EventSourceMessage) => void;
+    onclose?: () => void;
+    onerror?: (err: any) => number | null | undefined | void;
+}, ctrl = new AbortController(), body?: any, serverHomeIndex?: number) {
+    const qsStr = body ? `?${qs.stringify(body)}` : "";
+    fetchEventSource(getUrl(url, serverHomeIndex) + qsStr, {
+        method: "GET",
+        headers: {
+            ...requestParams.extraHeaders,
+            "Content-Type": "application/json",
+            Accept: "text/event-stream",
+        },
+        signal: ctrl.signal,
+        openWhenHidden: true,
+        async onopen(response) {
+            console.log("onopen", response);
+        },
+        onmessage(response) {
+            console.log("fetchEventSource:", response);
+        },
+        onclose() {
+            console.log("onclose");
+        },
+        onerror(err) {
+            console.log("onerror", err);
+            ctrl.abort();
+            throw err;
+        },
+        ...cb
+    });
 }
 
 export function requestGet(url: string, body?: any, serverHomeIndex?: number) {
