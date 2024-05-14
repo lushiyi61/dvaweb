@@ -90,13 +90,13 @@ bindingModel({
                     },
                     function (err: any, data: { Location: any; }) {
                         if (err) {
-                            onError(err)
+                            onError && onError(err)
                             console.log('err:', err);
                             resolve(null)
                         } else {
                             const { Location } = data
                             const url = Location.replace(urlBefore, urlAfter)
-                            onSuccess({ url, name: file.name, size: file.size })
+                            onSuccess && onSuccess({ url, name: file.name, size: file.size })
                             resolve({ url, name: file.name, size: file.size })
                         }
                     }
