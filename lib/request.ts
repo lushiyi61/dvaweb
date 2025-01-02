@@ -105,13 +105,9 @@ export function requestPut(url: string, body?: any, serverHomeIndex?: number) {
     return request(getUrl(url, serverHomeIndex), { method: "PUT", body }, requestParams);
 }
 
-export function uploadFile(url: string, body: any = {}, serverHomeIndex?: number,): Promise<any> {
-    const { file } = body;
-    const formData = new FormData();
-    formData.append("file", file);
-    return request(getUrl(url, serverHomeIndex), { method: "POST", formData }, requestParams, { 'Content-Type': 'application/form-data' });
+export function uploadFile(url: string, body: FormData, serverHomeIndex?: number,): Promise<any> {
+    return request(getUrl(url, serverHomeIndex), { method: "POST", body }, requestParams, { 'Content-Type': 'application/form-data' });
 }
-
 export function requestFile(
     url: string,
     body: any = {},
