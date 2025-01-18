@@ -101,7 +101,6 @@ export function requestPatch(url: string, body?: any, serverHomeIndex?: number) 
 }
 
 export function requestPut(url: string, body?: any, serverHomeIndex?: number) {
-    body && delete body.id;
     return request(getUrl(url, serverHomeIndex), { method: "PUT", body }, requestParams);
 }
 
